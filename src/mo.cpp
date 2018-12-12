@@ -126,7 +126,7 @@ int main( int, char** argv )
         std::cout << "This program is part of the moReaderSDK written by Domenico Gentner."    << std::endl;
         std::cout << "Released under the Terms of the MIT-License." << std::endl;
         std::cout << "Type " << appname << " --license to view it." << std::endl;
-        std::cout << "Get all News and Updates from http://mofilereader.googlecode.com." << std::endl;
+        std::cout << "Get all News and Updates from https://github.com/AnotherFoxGuy/MofileReader." << std::endl;
         return EXIT_SUCCESS;
     }
     else if ( std::string(argv[1]) == "--license" )

@@ -87,12 +87,6 @@
   * See moReader[.exe] --help for details. 
   * You will find the libraries in %%projectdir%%/lib and the binary in %%projectdir%%/bin
   *
-  * <h2>Compilation via provided batch-files (woe32 only)</h2>
-  *
-  * - Call compile_vc.bat or compile_mingw.bat with one of these options:
-  *     - DLL - Compiles as dynamic loaded module.
-  *     - LIB - Compiles as static library.
-  *     - EXE - Compiles the executable.
   *
   * <h2>None of those?</h2>
   *
@@ -121,9 +115,7 @@
   * so it should work on all machines where a C++-runtime is provided.
   *
   * \note We do not yet support .mo-Files with reversed magic-numbers, since I don't have
-  *       a file to test it and I hate to release stuff I wasn't able to test. 
-  *       If you can provide such a file with reversed bytes, please compile %%projectdir%%/bin/i18n/de/moTest.po with
-  *       gettext or poEdit and send it to scorcher24 [at] gmail [dot] com.
+  *       a file to test it and I hate to release stuff I wasn't able to test.
   *
   * <h2>Changelog</h2>
   * 
@@ -159,8 +151,7 @@
   * All other Trademarks are property of their respective owners. \n
   * \n
   * Thanks for using this piece of OpenSource-Software.\n
-  * If you (dis)like it or have suggestions, questions, patches etc, please don't hesitate to write to my email-adress: scorcher24 [at] gmail [dot] com.
-  * Submit patches and/or bugs on http://mofilereader.googlecode.com. You must register with googlemail to sign in.
+  * Submit patches and/or bugs on https://github.com/AnotherFoxGuy/MofileReader.
   * Send your flames, dumb comments etc to /dev/null, thank you. 
   */
 
