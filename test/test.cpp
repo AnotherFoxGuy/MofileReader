@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 using namespace moFileLib;
+#define _L(str) moFileReaderSingleton::GetInstance().Lookup(str)
 #define _LC(ctx,str) moFileReaderSingleton::GetInstance().LookupWithContext(ctx,str)
 
 auto testMo = "test.mo";
@@ -16,11 +17,11 @@ TEST(moFileReader, Lookup)
 {
     moFileReaderSingleton::GetInstance ().ReadFile (testMo);
     /* This is the first comment. */
-    EXPECT_EQ ("Text Nederlands Een", _ ("String English One"));
+    EXPECT_EQ ("Text Nederlands Een", _L ("String English One"));
     /* This is the second comment. */
-    EXPECT_EQ ("Text Nederlands Twee", _ ("String English Two"));
+    EXPECT_EQ ("Text Nederlands Twee", _L ("String English Two"));
     /* This is the third comment.  */
-    EXPECT_EQ ("Text Nederlands Drie", _ ("String English Three"));
+    EXPECT_EQ ("Text Nederlands Drie", _L ("String English Three"));
 }
 
 

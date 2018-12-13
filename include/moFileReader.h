@@ -352,7 +352,7 @@ public:
 
     /** \brief Returns the searched translation or returns the input, restricted to the context given by context.
       * See https://www.gnu.org/software/gettext/manual/html_node/Contexts.html for more info.
-      * \param[in] context The id of the translation to search for.
+      * \param[in] context Restrict to the context given.
       * \param[in] id The id of the translation to search for.
       * \return The value you passed in via _id or the translated string.
       */
@@ -443,16 +443,6 @@ inline moFileReader::eErrorCode moReadMoFile(const char* _filename)
   * \return The translation if found, otherwise it returns id.
   */
 inline std::string _(const char* id)
-{
-    std::string r = moFileReaderSingleton::GetInstance().Lookup(id);
-    return r;
-}
-
-/** \brief Looks for the spec. string to translate.
-  * \param[in] id The string-id to search.
-  * \return The translation if found, otherwise it returns id.
-  */
-inline std::string _L(const char* id)
 {
     std::string r = moFileReaderSingleton::GetInstance().Lookup(id);
     return r;

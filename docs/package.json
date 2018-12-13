@@ -1,9 +1,10 @@
 {
-	"scripts": {
-		"deploy": "gh-pages -d doc/html"
-	},
-	"dependencies": {
-		"doxygen": "^0.3.0",
-		"gh-pages": "^2.0.1"
-	}
+    "scripts": {
+        "build": "node genDocs.js",
+        "deploy": "gh-pages -d doc/html"
+    },
+    "dependencies": {
+        "doxygen": "^0.3.0",
+        "gh-pages": "^2.0.1"
+    }
 }
