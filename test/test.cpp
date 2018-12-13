@@ -6,16 +6,14 @@ using namespace moFileLib;
 #define _L(str) moFileReaderSingleton::GetInstance().Lookup(str)
 #define _LC(ctx,str) moFileReaderSingleton::GetInstance().LookupWithContext(ctx,str)
 
-auto testMo = "test.mo";
-
 TEST(moFileReader, setup)
 {
-	EXPECT_EQ(moFileReaderSingleton::GetInstance().ReadFile(testMo), moFileLib::moFileReader::EC_SUCCESS);
+	EXPECT_EQ(moFileReaderSingleton::GetInstance().ReadFile("test.mo"), moFileLib::moFileReader::EC_SUCCESS);
 }
 
 TEST(moFileReader, Lookup)
 {
-    moFileReaderSingleton::GetInstance ().ReadFile (testMo);
+    moFileReaderSingleton::GetInstance ().ReadFile ("test.mo");
     /* This is the first comment. */
     EXPECT_EQ ("Text Nederlands Een", _L ("String English One"));
     /* This is the second comment. */
@@ -27,7 +25,7 @@ TEST(moFileReader, Lookup)
 
 TEST (moFileReader, LookupWithContext)
 {
-    moFileReaderSingleton::GetInstance ().ReadFile (testMo);
+    moFileReaderSingleton::GetInstance ().ReadFile ("test.mo");
     /* This is the first comment. */
     EXPECT_EQ ("Text Nederlands Een", _LC ("TEST|String|1", "String English"));
     /* This is the second comment. */
