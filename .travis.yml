@@ -1,10 +1,10 @@
 
 env:
    global:
-     - CONAN_REFERENCE: "MofileReader/0.1.2"
+     - CONAN_REFERENCE: "MofileReader/1.0.0"
      - CONAN_USERNAME: "anotherfoxguy"
      - CONAN_LOGIN_USERNAME: "anotherfoxguy"
-     - CONAN_CHANNEL: "MofileReader"
+     - CONAN_CHANNEL: "testing"
      - CONAN_UPLOAD: "https://api.bintray.com/conan/anotherfoxguy/ror-dependencies"
 
 linux: &linux

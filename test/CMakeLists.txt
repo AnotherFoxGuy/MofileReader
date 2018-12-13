@@ -8,8 +8,13 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 
 conan_cmake_run(REQUIRES gtest/1.8.1@bincrafters/stable BASIC_SETUP CMAKE_TARGETS BUILD missing)
 
-add_executable(test test.cpp)
-target_link_libraries(test CONAN_PKG::gtest moFileReader)
-add_test(NAME mo_test COMMAND test)
+add_executable(moFileReaderTest test.cpp)
+target_include_directories(moFileReaderTest PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(moFileReaderTest CONAN_PKG::gtest moFileReader)
+add_test(NAME mo_test COMMAND moFileReaderTest)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test.mo DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin/)
+add_custom_command(
+	TARGET moFileReaderTest POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/test.mo $<TARGET_FILE_DIR:moFileReaderTest>/test.mo
+	COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/test.mo ${CMAKE_CURRENT_BINARY_DIR}/test.mo
+)

@@ -1,7 +1,8 @@
 /*
  * moFileReader - A simple .mo-File-Reader
  * Copyright (C) 2009 Domenico Gentner (scorcher24@gmail.com)
- * All rights reserved.                          
+ * Copyright (C) 2018 Edgar (Edgar@AnotherFoxGuy.com)
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -14,8 +15,8 @@
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
  *
- *   3. The names of its contributors may not be used to endorse or promote 
- *      products derived from this software without specific prior written 
+ *   3. The names of its contributors may not be used to endorse or promote
+ *      products derived from this software without specific prior written
  *      permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -30,12 +31,12 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "../include/moFileReader.h"
+#include "moFileReader.h"
 #include <iostream>
 #include <cstdlib>
 
 #if defined(_MSC_VER) && defined(_DEBUG)
-#   include <crtdbg.h>   
+#   include <crtdbg.h>
 #endif /* _MSC_VER */
 
 using namespace moFileLib;
@@ -45,8 +46,8 @@ void Usage(const std::string appname)
     std::cout << "Usage: "                                                                  << std::endl;
     std::cout << appname << " <option> <params>"                                           << std::endl;
     std::cout << "Possible Options: "                                                       << std::endl;
-    std::cout << "--lookup <mofile> <msgid>        - Outputs the given ID from the file."   << std::endl;    
-    std::cout << "--export <mofile> [<exportfile>] - Exports the whole .mo-file as HTML."   << std::endl;        
+    std::cout << "--lookup <mofile> <msgid>        - Outputs the given ID from the file."   << std::endl;
+    std::cout << "--export <mofile> [<exportfile>] - Exports the whole .mo-file as HTML."   << std::endl;
     std::cout << "--help,-h,-?  - Prints this screen"                                       << std::endl;
     std::cout << "--license     - Prints the license of this program. "                     << std::endl;
     std::cout                                                                               << std::endl;
@@ -107,7 +108,7 @@ int main( int, char** argv )
             long flag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
             flag |= _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF;
             _CrtSetDbgFlag(flag);
-#endif /* _MSC_VER && _DEBUG */    
+#endif /* _MSC_VER && _DEBUG */
 
     std::string appname = GetAppName(argv[0]);
 
@@ -146,7 +147,7 @@ int main( int, char** argv )
         {
             outfile = argv[3];
         }
-        
+
         moFileReader::eErrorCode r = moFileReader::ExportAsHTML(argv[2], outfile);
         if (  r == moFileReader::EC_SUCCESS )
         {
@@ -161,7 +162,7 @@ int main( int, char** argv )
         else if ( r == moFileReader::EC_FILENOTFOUND )
         {
             std::cout << "Could not dump " << argv[2] << " to " << outfile << " because I could not open a file!" << std::endl;
-            return EXIT_FAILURE;            
+            return EXIT_FAILURE;
         }
         else if ( r == moFileReader::EC_FILEINVALID )
         {
@@ -229,4 +230,3 @@ int WINAPI DllMain( DWORD reason, LPVOID)
 }
 
 #endif /* Compilation-Mode */
-

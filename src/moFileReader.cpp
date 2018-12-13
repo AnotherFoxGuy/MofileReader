@@ -1,7 +1,8 @@
 /*
  * moFileReader - A simple .mo-File-Reader
  * Copyright (C) 2009 Domenico Gentner (scorcher24@gmail.com)
- * All rights reserved.                          
+ * Copyright (C) 2018 Edgar (Edgar@AnotherFoxGuy.com)
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -14,8 +15,8 @@
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
  *
- *   3. The names of its contributors may not be used to endorse or promote 
- *      products derived from this software without specific prior written 
+ *   3. The names of its contributors may not be used to endorse or promote
+ *      products derived from this software without specific prior written
  *      permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -30,13 +31,13 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "../include/moFileReader.h"
+#include "moFileReader.h"
 #include <iostream>
 #include <cstdlib>
 
 MO_BEGIN_NAMESPACE
 
-unsigned long moFileReader::SwapBytes(unsigned long in) 
+unsigned long moFileReader::SwapBytes(unsigned long in)
 {
     unsigned long b0 = (in >> 0) & 0xff;
     unsigned long b1 = (in >> 8) & 0xff;
@@ -64,9 +65,25 @@ unsigned int moFileReader::GetNumStrings() const
 std::string moFileReader::Lookup( const char* id ) const
 {
     if ( m_lookup.size() <= 0) return id;
-    moLookupList::const_iterator iterator = m_lookup.find(id);    
+    moLookupList::const_iterator iterator = m_lookup.find(id);
 
     if ( iterator == m_lookup.end() )
+    {
+        return id;
+    }
+    return iterator->second;
+}
+
+std::string moFileReader::LookupWithContext (const char* context, const char* id) const
+{
+    std::string idName = context;
+    idName += '\x04';
+    idName += id;
+
+    if (m_lookup.size () <= 0) return id;
+    moLookupList::const_iterator iterator = m_lookup.find (idName);
+
+    if (iterator == m_lookup.end ())
     {
         return id;
     }
@@ -77,13 +94,13 @@ moFileReader::eErrorCode moFileReader::ParseData(std::string data)
 {
     // Creating a file-description.
     moFileInfo moInfo;
-    
+
     // Reference to the List inside moInfo.
     moFileInfo::moTranslationPairList& TransPairInfo = moInfo.m_translationPairInformation;
-    
+
     // Opening the file.
     std::stringstream stream(data);
-    
+
     // Read in all the 4 bytes of fire-magic, offsets and stuff...
     stream.read((char*)&moInfo.m_magicNumber, 4);
     stream.read((char*)&moInfo.m_fileVersion, 4);
@@ -92,14 +109,14 @@ moFileReader::eErrorCode moFileReader::ParseData(std::string data)
     stream.read((char*)&moInfo.m_offsetTranslation, 4);
     stream.read((char*)&moInfo.m_sizeHashtable, 4);
     stream.read((char*)&moInfo.m_offsetHashtable, 4);
-    
+
     if ( stream.bad() )
     {
         m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
         printf("%s", m_error.c_str());
         return moFileReader::EC_FILEINVALID;
     }
-    
+
     // Checking the Magic Number
     if ( MagicNumber != moInfo.m_magicNumber )
     {
@@ -116,7 +133,7 @@ moFileReader::eErrorCode moFileReader::ParseData(std::string data)
             return moFileReader::EC_MAGICNUMBER_REVERSED;
         }
     }
-    
+
     // Now we search all Length & Offsets of the original strings
     for ( int i = 0; i < moInfo.m_numStrings; i++ )
     {
@@ -129,10 +146,10 @@ moFileReader::eErrorCode moFileReader::ParseData(std::string data)
             printf("%s", m_error.c_str());
             return moFileReader::EC_FILEINVALID;
         }
-        
+
         TransPairInfo.push_back(_str);
     }
-    
+
     // Get all Lengths & Offsets of the translated strings
     // Be aware: The Descriptors already exist in our list, so we just mod. refs from the deque.
     for ( int i = 0; i < moInfo.m_numStrings; i++ )
@@ -147,61 +164,61 @@ moFileReader::eErrorCode moFileReader::ParseData(std::string data)
             return moFileReader::EC_FILEINVALID;
         }
     }
-    
+
     // Normally you would read the hash-table here, but we don't use it. :)
-    
+
     // Now to the interesting part, we read the strings-pairs now
     for ( int i = 0; i < moInfo.m_numStrings; i++)
     {
         // We need a length of +1 to catch the trailing \0.
         int orLength = TransPairInfo[i].m_orLength+1;
         int trLength = TransPairInfo[i].m_trLength+1;
-        
+
         int orOffset = TransPairInfo[i].m_orOffset;
         int trOffset = TransPairInfo[i].m_trOffset;
-        
+
         // Original
         char* original  = new char[orLength];
         memset(original, 0, sizeof(char)*orLength);
-        
+
         stream.seekg(orOffset);
         stream.read(original, orLength);
-        
+
         if ( stream.bad() )
         {
             m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
             printf("%s", m_error.c_str());
             return moFileReader::EC_FILEINVALID;
         }
-        
+
         // Translation
         char* translation = new char[trLength];
         memset(translation, 0, sizeof(char)*trLength);
-        
+
         stream.seekg(trOffset);
         stream.read(translation, trLength);
-        
+
         if ( stream.bad() )
         {
             m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
             printf("%s", m_error.c_str());
             return moFileReader::EC_FILEINVALID;
         }
-        
+
         // Store it in the map.
         m_lookup[std::string(original)] = std::string(translation);
-        
+
         // Cleanup...
         delete original;
         delete translation;
     }
-    
+
     // Done :)
     return moFileReader::EC_SUCCESS;
 }
 
 moFileReader::eErrorCode moFileReader::ReadFile( const char* filename )
-{    
+{
     // Creating a file-description.
     moFileInfo moInfo;
 
@@ -247,11 +264,11 @@ moFileReader::eErrorCode moFileReader::ReadFile( const char* filename )
             return moFileReader::EC_MAGICNUMBER_REVERSED;
         }
     }
-    
+
     // Now we search all Length & Offsets of the original strings
     for ( int i = 0; i < moInfo.m_numStrings; i++ )
     {
-        moTranslationPairInformation _str;        
+        moTranslationPairInformation _str;
         stream.read((char*)&_str.m_orLength, 4);
         stream.read((char*)&_str.m_orOffset, 4);
         if ( stream.bad() )
@@ -303,7 +320,7 @@ moFileReader::eErrorCode moFileReader::ReadFile( const char* filename )
             m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
             return moFileReader::EC_FILEINVALID;
         }
-        
+
         // Translation
         char* translation = new char[trLength];
         memset(translation, 0, sizeof(char)*trLength);
@@ -317,7 +334,7 @@ moFileReader::eErrorCode moFileReader::ReadFile( const char* filename )
             return moFileReader::EC_FILEINVALID;
         }
 
-        // Store it in the map.    
+        // Store it in the map.
         m_lookup[std::string(original)] = std::string(translation);
 
         // Cleanup...
@@ -344,7 +361,7 @@ moFileReader::eErrorCode moFileReader::ExportAsHTML(std::string infile, std::str
     if ( reader.m_lookup.empty() )
     {
         return moFileReader::EC_TABLEEMPTY;
-    }    
+    }
 
     // Beautify Output
     std::string fname;
@@ -363,11 +380,11 @@ moFileReader::eErrorCode moFileReader::ExportAsHTML(std::string infile, std::str
     if (htmlfile.empty())
     {
         htmlfile = infile + std::string(".html");
-    }   
+    }
 
     // Ok, now prepare output.
     std::ofstream stream(htmlfile.c_str());
-    if ( stream.is_open() ) 
+    if ( stream.is_open() )
     {
         stream << R"(<!DOCTYPE HTML PUBLIC "- //W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">)"
                << std::endl;
@@ -383,7 +400,7 @@ moFileReader::eErrorCode moFileReader::ExportAsHTML(std::string infile, std::str
 
         std::stringstream parsee;
         parsee << reader.Lookup("");
-     
+
         while ( !parsee.eof() )
         {
             char buffer[1024];
@@ -402,7 +419,7 @@ moFileReader::eErrorCode moFileReader::ExportAsHTML(std::string infile, std::str
 
         // Now output the content
         stream << R"(<table border="1"><th colspan="2">Content</th>)" << std::endl;
-        for ( moLookupList::const_iterator it = reader.m_lookup.begin(); 
+        for ( moLookupList::const_iterator it = reader.m_lookup.begin();
              it != reader.m_lookup.end(); it++)
         {
             if ( it->first != "" ) // Skip the empty msgid, its the table we handled above.
@@ -421,12 +438,12 @@ moFileReader::eErrorCode moFileReader::ExportAsHTML(std::string infile, std::str
     {
         return moFileReader::EC_FILENOTFOUND;
     }
-   
+
     return moFileReader::EC_SUCCESS;
 }
 
 
-// Removes spaces from front and end. 
+// Removes spaces from front and end.
 void moFileReader::Trim(std::string& in)
 {
     while ( in[0] == ' ' )
@@ -477,7 +494,7 @@ void moFileReader::MakeHtmlConform(std::string& inout)
         {
             inout.replace(i, 1, "(");
         }
-    }    
+    }
 }
 
 
@@ -489,7 +506,7 @@ moFileReaderSingleton& moFileReaderSingleton::GetInstance()
 {
     static moFileReaderSingleton theoneandonly;
     return theoneandonly;
-} 
+}
 
 
 moFileReaderSingleton::moFileReaderSingleton(const moFileReaderSingleton& )

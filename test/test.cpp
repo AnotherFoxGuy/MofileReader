@@ -2,19 +2,35 @@
 #include "moFileReader.h"
 #include "gtest/gtest.h"
 
-#define _L(str) moFileLib::moFileReaderSingleton::GetInstance().Lookup(str)
+using namespace moFileLib;
+#define _LC(ctx,str) moFileReaderSingleton::GetInstance().LookupWithContext(ctx,str)
 
 auto testMo = "test.mo";
 
 TEST(moFileReader, setup)
 {
-	EXPECT_EQ(moFileLib::moFileReaderSingleton::GetInstance().ReadFile(testMo), moFileLib::moFileReader::EC_SUCCESS);
+	EXPECT_EQ(moFileReaderSingleton::GetInstance().ReadFile(testMo), moFileLib::moFileReader::EC_SUCCESS);
 }
 
 TEST(moFileReader, Lookup)
 {
-	moFileLib::moFileReaderSingleton::GetInstance().ReadFile(testMo);
-	EXPECT_EQ("Text Nederlands Een", _L("String English One"));
-	EXPECT_EQ("Text Nederlands Twee", _L("String English Two"));
-	EXPECT_EQ("Text Nederlands Drie", _L("String English Three"));
+    moFileReaderSingleton::GetInstance ().ReadFile (testMo);
+    /* This is the first comment. */
+    EXPECT_EQ ("Text Nederlands Een", _ ("String English One"));
+    /* This is the second comment. */
+    EXPECT_EQ ("Text Nederlands Twee", _ ("String English Two"));
+    /* This is the third comment.  */
+    EXPECT_EQ ("Text Nederlands Drie", _ ("String English Three"));
+}
+
+
+TEST (moFileReader, LookupWithContext)
+{
+    moFileReaderSingleton::GetInstance ().ReadFile (testMo);
+    /* This is the first comment. */
+    EXPECT_EQ ("Text Nederlands Een", _LC ("TEST|String|1", "String English"));
+    /* This is the second comment. */
+    EXPECT_EQ ("Text Nederlands Twee", _LC ("TEST|String|2", "String English"));
+    /* This is the third comment.  */
+    EXPECT_EQ ("Text Nederlands Drie", _LC ("TEST|String|3", "String English"));
 }

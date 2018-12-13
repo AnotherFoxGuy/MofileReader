@@ -5,27 +5,64 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: moFileReader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-13 10:49+0100\n"
-"PO-Revision-Date: 2018-12-13 11:00+0100\n"
+"POT-Creation-Date: 2018-12-13 14:39+0100\n"
+"PO-Revision-Date: 2018-12-13 14:40+0100\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: Test\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.2\n"
 
-#: test.cpp:21
+#. This is the first comment.
+#: test.cpp:31
+msgctxt "TEST|String|1"
+msgid "String English"
+msgstr "Text Nederlands Een"
+
+#. This is the second comment.
+#: test.cpp:33
+msgctxt "TEST|String|2"
+msgid "String English"
+msgstr "Text Nederlands Twee"
+
+#. This is the third comment.
+#: test.cpp:35
+msgctxt "TEST|String|3"
+msgid "String English"
+msgstr "Text Nederlands Drie"
+
+#. This is the first comment.
+#: test.cpp:19
 msgid "String English One"
 msgstr "Text Nederlands Een"
 
+#. This is the third comment.
 #: test.cpp:23
 msgid "String English Three"
 msgstr "Text Nederlands Drie"
 
-#: test.cpp:22
+#. This is the second comment.
+#: test.cpp:21
 msgid "String English Two"
 msgstr "Text Nederlands Twee"
+
+#~ msgctxt "TEST|String|1"
+#~ msgid "String English One"
+#~ msgstr "Text Nederlands Een"
+
+#~ msgctxt "TEST|String|3"
+#~ msgid "String English Three"
+#~ msgstr "Text Nederlands Drie"
+
+#~ msgctxt "TEST|String|2"
+#~ msgid "String English Two"
+#~ msgstr "Text Nederlands Twee"
+
+#~ msgctxt "Menu|"
+#~ msgid "File"
+#~ msgstr "Bestand"

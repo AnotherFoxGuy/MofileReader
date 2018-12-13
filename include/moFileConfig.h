@@ -1,7 +1,8 @@
 /*
  * moFileReader - A simple .mo-File-Reader
  * Copyright (C) 2009 Domenico Gentner (scorcher24@gmail.com)
- * All rights reserved.                          
+ * Copyright (C) 2018 Edgar (Edgar@AnotherFoxGuy.com)
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -14,8 +15,8 @@
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
  *
- *   3. The names of its contributors may not be used to endorse or promote 
- *      products derived from this software without specific prior written 
+ *   3. The names of its contributors may not be used to endorse or promote
+ *      products derived from this software without specific prior written
  *      permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -37,9 +38,9 @@
 // Defines an export-macro when compiling as dll on woe32.
 //-------------------------------------------------------------
 #if defined(MOFILE_EXPORTS) && defined (WIN32)
-#   define MOEXPORT __declspec(dllexport) 
-#elif defined (MOFILE_IMPORT) && defined(WIN32) 
-#   define MOEXPORT __declspec(dllimport) 
+#   define MOEXPORT __declspec(dllexport)
+#elif defined (MOFILE_IMPORT) && defined(WIN32)
+#   define MOEXPORT __declspec(dllimport)
 #else
 #   define MOEXPORT
 #endif
@@ -66,5 +67,3 @@
 
 
 #endif /* __MOFILECONFIG_H_INCLUDED__ */
-
-

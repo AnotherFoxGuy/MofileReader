@@ -3,7 +3,7 @@ import os
 
 class MofilereaderConan(ConanFile):
     name = "MofileReader"
-    version = "0.1.2"
+    version = "1.0.0"
     license = "MIT"
     url = "https://github.com/AnotherFoxGuy/conan-MofileReader/"
     description = "This API lets you read .mo-Files and use their content just as you would do with GNUs gettext."

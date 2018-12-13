@@ -4,3 +4,5 @@ cmake-build-debug/
 \.idea/
 docs/node_modules/
 docs/doc/
+
+build/
