@@ -238,7 +238,7 @@ moFileReader::eErrorCode moFileReader::ReadFile( const char* filename )
         if ( MagicReversed != moInfo.m_magicNumber )
         {
             m_error = "The Magic Number does not match in all cases!";
-            return moFileReader::EC_MAGICNUMBER_NOMATCH;
+            //return moFileReader::EC_MAGICNUMBER_NOMATCH;
         }
         else
         {
@@ -246,7 +246,7 @@ moFileReader::eErrorCode moFileReader::ReadFile( const char* filename )
             m_error = "Magic Number is reversed. We do not support this yet!";
             return moFileReader::EC_MAGICNUMBER_REVERSED;
         }
-    }  
+    }
     
     // Now we search all Length & Offsets of the original strings
     for ( int i = 0; i < moInfo.m_numStrings; i++ )
