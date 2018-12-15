@@ -13,7 +13,10 @@
 # possible settings.
 #-------------------------------------------------------
 cmake_minimum_required(VERSION 3.0)
+
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set(CMAKE_CXX_STANDARD 11)
+
 project(moFileReader)
 
 # Let the user choose between static lib and dll
