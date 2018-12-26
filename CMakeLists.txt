@@ -42,6 +42,16 @@ endif ()
 add_dependencies(moReader moFileReader)
 target_link_libraries(moReader moFileReader)
 
+install(TARGETS moReader 
+	RUNTIME DESTINATION bin
+)
+install(TARGETS moFileReader 
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+	PUBLIC_HEADER DESTINATION include
+)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include/)
+
 option(BUILD_TEST "Set this to ON if you want to build the test" OFF)
 
 if(BUILD_TEST)

@@ -9,7 +9,7 @@ using namespace moFileLib;
 
 TEST_CASE ("Load mo-file", "[ReadFile]")
 {
-	CHECK (moFileReaderSingleton::GetInstance().ReadFile("test.mo") == moFileLib::moFileReader::EC_SUCCESS);
+    CHECK (moFileReaderSingleton::GetInstance ().ReadFile ("test.mo") == moFileLib::moFileReader::EC_SUCCESS);
 }
 
 TEST_CASE ("Lookup string", "[Lookup]")
@@ -20,7 +20,7 @@ TEST_CASE ("Lookup string", "[Lookup]")
     /* This is the second comment. */
     CHECK ("Text Nederlands Twee" == _L ("String English Two"));
     /* This is the third comment.  */
-    CHECK ("Text Nederlands Drie" ==  _L ("String English Three"));
+    CHECK ("Text Nederlands Drie" == _L ("String English Three"));
 }
 
 
