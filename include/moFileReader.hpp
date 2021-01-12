@@ -34,6 +34,10 @@
 #ifndef __MOFILEREADER_SINGLE_INCLUDE_H_INCLUDED__
 #define __MOFILEREADER_SINGLE_INCLUDE_H_INCLUDED__
 
+#if defined(_MSC_VER)
+    #pragma warning(disable : 4267)
+#endif /* _MSC_VER */
+
 #include <cstring> // this is for memset when compiling with gcc.
 #include <deque>
 #include <fstream>

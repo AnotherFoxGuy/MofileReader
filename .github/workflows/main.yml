@@ -5,6 +5,7 @@ jobs:
     name: Testing on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
     steps:
@@ -17,4 +18,4 @@ jobs:
         run: cmake --build .
 
       - name: Test
-        run: ctest .
+        run: ctest -C Debug .

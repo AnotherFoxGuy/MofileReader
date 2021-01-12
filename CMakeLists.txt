@@ -1,19 +1,9 @@
 #-------------------------------------------------------
 # moFileReader Main Build Script
-#
-# Defined Variables:
-#   - COMPILE_DLL
-#     - ON  : Compiles the code as a shared Library
-#     - OFF : Compiles the code as a static Library
-#   - BUILD_DEBUG
-#     - ON  : Compiles Debug-Information into the output
-#     - OFF : Optimizes the compilation with O2.
-#
-# Run cmake with -DVARNAME=ON/OFF to benefit from those
-# possible settings.
 #-------------------------------------------------------
 cmake_minimum_required(VERSION 3.0)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CXX_STANDARD 11)
 
