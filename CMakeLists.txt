@@ -19,37 +19,16 @@ set(CMAKE_CXX_STANDARD 11)
 
 project(moFileReader)
 
-# Let the user choose between static lib and dll
-# To use it, call cmake -DCOMPILE_DLL=ON
-option(COMPILE_DLL "Set this to ON if you want to compile the library as an DLL. When this is OFF, a static library is created (default)." OFF)
-if (COMPILE_DLL)
-    # DLL
-    target_compile_definitions(moReader PRIVATE _USRDLL MOFILE_EXPORTS)
-endif ()
-
-add_library(moFileReader STATIC ${CMAKE_SOURCE_DIR}/src/moFileReader.cpp ${CMAKE_SOURCE_DIR}/src/mo.cpp)
 add_executable(moReader ${CMAKE_SOURCE_DIR}/src/mo.cpp)
 
-target_include_directories(moFileReader PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_include_directories(moReader PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
-if (COMPILE_DLL)
-    target_compile_definitions(moReader PRIVATE _CONSOLE MOFILE_IMPORT)
-else ()
-    target_compile_definitions(moReader PRIVATE _CONSOLE)
-endif ()
-
-add_dependencies(moReader moFileReader)
-target_link_libraries(moReader moFileReader)
+target_compile_definitions(moReader PRIVATE _CONSOLE)
 
 install(TARGETS moReader 
 	RUNTIME DESTINATION bin
 )
-install(TARGETS moFileReader 
-	LIBRARY DESTINATION lib
-	ARCHIVE DESTINATION lib
-	PUBLIC_HEADER DESTINATION include
-)
+
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include/)
 
 option(BUILD_TEST "Set this to ON if you want to build the test" OFF)
