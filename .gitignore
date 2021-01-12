@@ -1,8 +1,7 @@
 .directory
 *.exe
-cmake-build-debug/
+cmake-build-*/
 \.idea/
-docs/node_modules/
-docs/doc/
+docs/
 build/
 _build/
