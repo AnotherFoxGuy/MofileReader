@@ -10,10 +10,7 @@ set(CMAKE_CXX_STANDARD 11)
 project(moFileReader)
 
 add_executable(moReader ${CMAKE_SOURCE_DIR}/src/mo.cpp)
-
 target_include_directories(moReader PRIVATE ${CMAKE_SOURCE_DIR}/include)
-
-target_compile_definitions(moReader PRIVATE _CONSOLE)
 
 install(TARGETS moReader 
 	RUNTIME DESTINATION bin
