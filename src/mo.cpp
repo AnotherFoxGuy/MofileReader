@@ -97,7 +97,7 @@ void PrintLicense()
 std::string GetAppName(const char *raw)
 {
     std::string r(raw);
-    int         first = r.find_last_of(moPATHSEP) + 1;
+    int         first = r.find_last_of(MO_PATHSEP) + 1;
     r                 = r.substr(first, r.length() - first);
     return r;
 }
