@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['m_5ferror_81',['m_error',['../classmo_file_reader.html#ae8fb2a5f7a3e3ff76db8d5086a4c8d53',1,'moFileReader']]],
+  ['m_5ffileversion_82',['m_fileVersion',['../structmo_file_info.html#a8dd7ebb17501b07825a9b1e6004393a6',1,'moFileInfo']]],
+  ['m_5fmagicnumber_83',['m_magicNumber',['../structmo_file_info.html#abbb8d5896d0f9129582a3fba0329014a',1,'moFileInfo']]],
+  ['m_5fnumstrings_84',['m_numStrings',['../structmo_file_info.html#a3420bb85a693fdde167600bd63ac9178',1,'moFileInfo']]],
+  ['m_5foffsethashtable_85',['m_offsetHashtable',['../structmo_file_info.html#a5aee97508f67928b3e80528d705ce033',1,'moFileInfo']]],
+  ['m_5foffsetoriginal_86',['m_offsetOriginal',['../structmo_file_info.html#a9e5c83dd02afe21d6e19b75ee00cc5a5',1,'moFileInfo']]],
+  ['m_5foffsettranslation_87',['m_offsetTranslation',['../structmo_file_info.html#a14b1b62c70f646772a5238ee33864ce4',1,'moFileInfo']]],
+  ['m_5forlength_88',['m_orLength',['../structmo_translation_pair_information.html#a4d202d507d92a8109076a9f73f2b572a',1,'moTranslationPairInformation']]],
+  ['m_5foroffset_89',['m_orOffset',['../structmo_translation_pair_information.html#a0c53d1d1897adc0bb23fa6a1fa64c30b',1,'moTranslationPairInformation']]],
+  ['m_5freversed_90',['m_reversed',['../structmo_file_info.html#aa52855a008414cdbb82702fd7c0e1669',1,'moFileInfo']]],
+  ['m_5fsizehashtable_91',['m_sizeHashtable',['../structmo_file_info.html#a5fb5ef4cc47e5f229f50285b8603fa88',1,'moFileInfo']]],
+  ['m_5ftranslationpairinformation_92',['m_translationPairInformation',['../structmo_file_info.html#ad182c32a348f4292f178394a17bfd405',1,'moFileInfo']]],
+  ['m_5ftrlength_93',['m_trLength',['../structmo_translation_pair_information.html#a7f6bf87fe2210b4740e41d93058e27fd',1,'moTranslationPairInformation']]],
+  ['m_5ftroffset_94',['m_trOffset',['../structmo_translation_pair_information.html#aed9260051d4fcf5d2bbeb39d647d4cf6',1,'moTranslationPairInformation']]],
+  ['magicnumber_95',['MagicNumber',['../classmo_file_reader.html#a073fe0f7dbd9dadf997f97494055fd1b',1,'moFileReader']]],
+  ['magicreversed_96',['MagicReversed',['../classmo_file_reader.html#a931e584ca16773bb1911c1587bb0daa3',1,'moFileReader']]]
+];
