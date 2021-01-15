@@ -41,9 +41,9 @@
 #include <cstring> // this is for memset when compiling with gcc.
 #include <deque>
 #include <fstream>
-#include <map>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 
 //-------------------------------------------------------------
 // Path-Seperators are different on other OS.
@@ -289,7 +289,10 @@ class moFileReader
 {
   protected:
     /// \brief Type for the map which holds the translation-pairs later.
-    typedef std::map<std::string, std::string> moLookupList;
+    typedef std::unordered_map<std::string, std::string> moLookupList;
+
+    /// \brief Type for the 2D map which holds the translation-pairs later.
+    typedef std::unordered_map<std::string, moLookupList> moContextLookupList;
 
   public:
     /// \brief The Magic Number describes the endianess of bytes on the system.
@@ -297,6 +300,9 @@ class moFileReader
 
     /// \brief If the Magic Number is Reversed, we need to swap the bytes.
     static const unsigned int MagicReversed = 0xDE120495;
+
+    /// \brief The character that is used to separate context strings
+    static const char ContextSeparator = '\x04';
 
     /// \brief The possible errorcodes for methods of this class
     enum eErrorCode
@@ -586,8 +592,24 @@ class moFileReader
                 return moFileReader::EC_FILEINVALID;
             }
 
+            std::string original_str = original;
+            std::string translation_str = translation;
+            auto x = original_str.find(ContextSeparator);
+
             // Store it in the map.
-            m_lookup[std::string(original)] = std::string(translation);
+            if(x == std::string::npos){
+                m_lookup[original_str] = translation_str;
+            }
+            else{
+                // try-catch for handling out_of_range exceptions
+                try {
+                    m_lookup_context[original_str.substr(0, x)][original_str.substr(x + 1, original_str.length())] = translation_str;
+                }
+                catch (const std::exception& e) {
+                    m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
+                    return moFileReader::EC_ERROR;
+                }
+            }
 
             // Cleanup...
             delete[] original;
@@ -608,8 +630,7 @@ class moFileReader
         if (m_lookup.empty()) return id;
         auto iterator = m_lookup.find(id);
 
-        if (iterator == m_lookup.end()) { return id; }
-        return iterator->second;
+        return iterator == m_lookup.end() ? id : iterator->second;
     }
 
     /** \brief Returns the searched translation or returns the input, restricted to the context given by context.
@@ -620,15 +641,13 @@ class moFileReader
      */
     std::string LookupWithContext(const char *context, const char *id) const
     {
-        std::string idName = context;
-        idName += '\x04';
-        idName += id;
+        if (m_lookup_context.empty()) return id;
+        auto iterator = m_lookup_context.find(context);
 
-        if (m_lookup.empty()) return id;
-        auto iterator = m_lookup.find(idName);
+        if(iterator == m_lookup_context.end()) return id;
+        auto iterator2 = iterator->second.find(id);
 
-        if (iterator == m_lookup.end()) { return id; }
-        return iterator->second;
+        return iterator2 == iterator->second.end() ? id : iterator2->second;
     }
 
     /// \brief Returns the Error Description.
@@ -762,6 +781,7 @@ class moFileReader
   private:
     // Holds the lookup-table
     moLookupList m_lookup;
+    moContextLookupList m_lookup_context;
 
     // Replaces < with ( to satisfy html-rules.
     static void MakeHtmlConform(std::string &_inout)
