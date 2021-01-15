@@ -43,7 +43,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <unordered_map>
+#include <map>
 
 //-------------------------------------------------------------
 // Path-Seperators are different on other OS.
@@ -289,10 +289,10 @@ class moFileReader
 {
   protected:
     /// \brief Type for the map which holds the translation-pairs later.
-    typedef std::unordered_map<std::string, std::string> moLookupList;
+    typedef std::map<std::string, std::string> moLookupList;
 
     /// \brief Type for the 2D map which holds the translation-pairs later.
-    typedef std::unordered_map<std::string, moLookupList> moContextLookupList;
+    typedef std::map<std::string, moLookupList> moContextLookupList;
 
   public:
     /// \brief The Magic Number describes the endianess of bytes on the system.
@@ -490,11 +490,13 @@ class moFileReader
             // Store it in the map.
             if(x == std::string::npos){
                 m_lookup[original_str] = translation_str;
+                numStrings++;
             }
             else{
                 // try-catch for handling out_of_range exceptions
                 try {
                     m_lookup_context[original_str.substr(0, x)][original_str.substr(x + 1, original_str.length())] = translation_str;
+                    numStrings++;
                 }
                 catch (...) {
                     m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
@@ -550,6 +552,8 @@ class moFileReader
     void ClearTable()
     {
         m_lookup.clear();
+        m_lookup_context.clear();
+        numStrings = 0;
     }
 
     /** \brief Returns the Number of Entries in our Lookup-Table.
@@ -558,7 +562,7 @@ class moFileReader
      */
     unsigned int GetNumStrings() const
     {
-        return m_lookup.size();
+        return numStrings;
     }
 
     /** \brief Exports the whole content of the .mo-File as .html
@@ -683,6 +687,8 @@ class moFileReader
     // Holds the lookup-table
     moLookupList m_lookup;
     moContextLookupList m_lookup_context;
+
+    int numStrings = 0;
 
     // Replaces < with ( to satisfy html-rules.
     static void MakeHtmlConform(std::string &_inout)
