@@ -739,7 +739,8 @@ class moFileReader
     }
 };
 
-/** \brief Convience Class
+#ifndef MO_NO_CONVIENCE_CLASS
+/** \brief Convenience Class
  *
  *
  * This class derives from moFileReader and builds a singleton to access its methods
@@ -818,6 +819,7 @@ inline int moFileGetNumStrings()
     int r = moFileReaderSingleton::GetInstance().GetNumStrings();
     return r;
 }
+#endif
 
 #if defined(_MSC_VER)
     #pragma warning(default : 4251)
