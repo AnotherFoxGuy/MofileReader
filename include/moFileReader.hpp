@@ -149,7 +149,6 @@
  *
  * Gettext is part of the GNU-Tools and (C) by the <a href="http://fsf.org">Free Software Foundation</a>.\n
  * Visual C++ Express is a registered Trademark of Microsoft, One Microsoft Way, Redmond, USA.\n
- * moFileReader is using NSIS for creating the setup-package. \n
  * All other Trademarks are property of their respective owners. \n
  * \n
  * Thanks for using this piece of OpenSource-Software.\n
