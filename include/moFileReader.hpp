@@ -751,7 +751,7 @@ class moFileReader
     }
 };
 
-#ifndef MO_NO_CONVIENCE_CLASS
+#ifndef MO_NO_CONVENIENCE_CLASS
 /** \brief Convenience Class
  *
  *
