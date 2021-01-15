@@ -41,18 +41,18 @@
 #include <cstring> // this is for memset when compiling with gcc.
 #include <deque>
 #include <fstream>
+#include <map>
 #include <sstream>
 #include <string>
-#include <map>
 
 //-------------------------------------------------------------
 // Path-Seperators are different on other OS.
 //-------------------------------------------------------------
-#ifndef moPATHSEP
+#ifndef MO_PATHSEP
     #ifdef WIN32
-        #define moPATHSEP std::string("\\")
+        #define MO_PATHSEP std::string("\\")
     #else
-        #define moPATHSEP std::string("/")
+        #define MO_PATHSEP std::string("/")
     #endif
 #endif
 
@@ -483,22 +483,27 @@ class moFileReader
                 return moFileReader::EC_FILEINVALID;
             }
 
-            std::string original_str = original;
+            std::string original_str    = original;
             std::string translation_str = translation;
-            auto x = original_str.find(ContextSeparator);
+            auto        ctxSeparator    = original_str.find(ContextSeparator);
 
             // Store it in the map.
-            if(x == std::string::npos){
+            if (ctxSeparator == std::string::npos)
+            {
                 m_lookup[original_str] = translation_str;
                 numStrings++;
             }
-            else{
+            else
+            {
                 // try-catch for handling out_of_range exceptions
-                try {
-                    m_lookup_context[original_str.substr(0, x)][original_str.substr(x + 1, original_str.length())] = translation_str;
+                try
+                {
+                    m_lookup_context[original_str.substr(0, ctxSeparator)]
+                                    [original_str.substr(ctxSeparator + 1, original_str.length())] = translation_str;
                     numStrings++;
                 }
-                catch (...) {
+                catch (...)
+                {
                     m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
                     return moFileReader::EC_ERROR;
                 }
@@ -536,7 +541,7 @@ class moFileReader
         if (m_lookup_context.empty()) return id;
         auto iterator = m_lookup_context.find(context);
 
-        if(iterator == m_lookup_context.end()) return id;
+        if (iterator == m_lookup_context.end()) return id;
         auto iterator2 = iterator->second.find(id);
 
         return iterator2 == iterator->second.end() ? id : iterator2->second;
@@ -575,14 +580,14 @@ class moFileReader
     static eErrorCode ExportAsHTML(const std::string &infile, const std::string &filename = "", const std::string &css = g_css)
     {
         // Read the file
-        moFileReader reader;
+        moFileReader             reader;
         moFileReader::eErrorCode r = reader.ReadFile(infile.c_str());
         if (r != moFileReader::EC_SUCCESS) { return r; }
         if (reader.m_lookup.empty()) { return moFileReader::EC_TABLEEMPTY; }
 
         // Beautify Output
         std::string  fname;
-        unsigned int pos = infile.find_last_of(moPATHSEP);
+        unsigned int pos = infile.find_last_of(MO_PATHSEP);
         if (pos != std::string::npos) { fname = infile.substr(pos + 1, infile.length()); }
         else
         {
@@ -685,7 +690,7 @@ class moFileReader
 
   private:
     // Holds the lookup-table
-    moLookupList m_lookup;
+    moLookupList        m_lookup;
     moContextLookupList m_lookup_context;
 
     int numStrings = 0;
