@@ -4,22 +4,44 @@
 #include "moFileReader.hpp"
 
 using namespace moFileLib;
-#define _L(str) moFileReaderSingleton::GetInstance().Lookup(str)
-#define _LC(ctx, str) moFileReaderSingleton::GetInstance().LookupWithContext(ctx, str)
+
+#define _L(str) moFR.Lookup(str)
+#define _LC(ctx, str) moFR.LookupWithContext(ctx, str)
 
 TEST_CASE("Load mo-file", "[ReadFile]")
 {
-    CHECK(moFileReaderSingleton::GetInstance().ReadFile("test.mo") == moFileLib::moFileReader::EC_SUCCESS);
+    moFileReader moFR;
+    CHECK(moFR.ReadFile("test.mo") == moFileReader::EC_SUCCESS);
 }
 
 TEST_CASE("Load not existing mo-file", "[ReadFile-fail]")
 {
-    CHECK(moFileReaderSingleton::GetInstance().ReadFile("e621.mo") == moFileLib::moFileReader::EC_FILENOTFOUND);
+    moFileReader moFR;
+    CHECK(moFR.ReadFile("e621.mo") == moFileReader::EC_FILENOTFOUND);
+}
+
+TEST_CASE("Count number of strings", "[Count]")
+{
+    moFileReader moFR;
+    moFR.ReadFile("test.mo");
+    CHECK(7 ==  moFR.GetNumStrings());
+}
+
+TEST_CASE("Empties the Lookup-Table", "[Count]")
+{
+    moFileReader moFR;
+    moFR.ReadFile("test.mo");
+    CHECK("Text Nederlands Een" == moFR.Lookup("String English One"));
+    CHECK(7 ==  moFR.GetNumStrings());
+    moFR.ClearTable();
+    CHECK("String English One" == moFR.Lookup("String English One"));
+    CHECK(0 ==  moFR.GetNumStrings());
 }
 
 TEST_CASE("Lookup string", "[Lookup]")
 {
-    moFileReaderSingleton::GetInstance().ReadFile("test.mo");
+    moFileReader moFR;
+    moFR.ReadFile("test.mo");
     /* This is the first comment. */
     CHECK("Text Nederlands Een" == _L("String English One"));
     /* This is the second comment. */
@@ -30,7 +52,8 @@ TEST_CASE("Lookup string", "[Lookup]")
 
 TEST_CASE("Lookup string with context", "[LookupWithContext]")
 {
-    moFileReaderSingleton::GetInstance().ReadFile("test.mo");
+    moFileReader moFR;
+    moFR.ReadFile("test.mo");
     /* This is the first comment. */
     CHECK("Text Nederlands Een" == _LC("TEST|String|1", "String English"));
     /* This is the second comment. */
@@ -41,14 +64,16 @@ TEST_CASE("Lookup string with context", "[LookupWithContext]")
 
 TEST_CASE("Lookup not existing strings", "[Lookup-fail]")
 {
-    moFileReaderSingleton::GetInstance().ReadFile("test.mo");
-    CHECK("No match" == moFileReaderSingleton::GetInstance().Lookup("No match"));
-    CHECK("Can't touch this" == moFileReaderSingleton::GetInstance().Lookup("Can't touch this"));
+    moFileReader moFR;
+    moFR.ReadFile("test.mo");
+    CHECK("No match" == moFR.Lookup("No match"));
+    CHECK("Can't touch this" == moFR.Lookup("Can't touch this"));
 }
 
 TEST_CASE("Lookup not existing strings with context", "[LookupWithContext-fail]")
 {
-    moFileReaderSingleton::GetInstance().ReadFile("test.mo");
+    moFileReader moFR;
+    moFR.ReadFile("test.mo");
     CHECK("String English" == _LC("Nope", "String English"));
     CHECK("Not this one" == _LC("TEST|String|1", "Not this one"));
 }
