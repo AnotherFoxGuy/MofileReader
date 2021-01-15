@@ -293,10 +293,10 @@ class moFileReader
 
   public:
     /// \brief The Magic Number describes the endianess of bytes on the system.
-    static const long MagicNumber = 0x950412DE;
+    static const unsigned int MagicNumber = 0x950412DE;
 
     /// \brief If the Magic Number is Reversed, we need to swap the bytes.
-    static const long MagicReversed = 0xDE120495;
+    static const unsigned int MagicReversed = 0xDE120495;
 
     /// \brief The possible errorcodes for methods of this class
     enum eErrorCode
@@ -507,7 +507,7 @@ class moFileReader
             if (MagicReversed != moInfo.m_magicNumber)
             {
                 m_error = "The Magic Number does not match in all cases!";
-                // return moFileReader::EC_MAGICNUMBER_NOMATCH;
+                return moFileReader::EC_MAGICNUMBER_NOMATCH;
             }
             else
             {
