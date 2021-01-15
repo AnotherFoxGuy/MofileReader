@@ -12,6 +12,11 @@ TEST_CASE("Load mo-file", "[ReadFile]")
     CHECK(moFileReaderSingleton::GetInstance().ReadFile("test.mo") == moFileLib::moFileReader::EC_SUCCESS);
 }
 
+TEST_CASE("Load not existing mo-file", "[ReadFile-fail]")
+{
+    CHECK(moFileReaderSingleton::GetInstance().ReadFile("e621.mo") == moFileLib::moFileReader::EC_FILENOTFOUND);
+}
+
 TEST_CASE("Lookup string", "[Lookup]")
 {
     moFileReaderSingleton::GetInstance().ReadFile("test.mo");
@@ -32,4 +37,18 @@ TEST_CASE("Lookup string with context", "[LookupWithContext]")
     CHECK("Text Nederlands Twee" == _LC("TEST|String|2", "String English"));
     /* This is the third comment.  */
     CHECK("Text Nederlands Drie" == _LC("TEST|String|3", "String English"));
+}
+
+TEST_CASE("Lookup not existing strings", "[Lookup-fail]")
+{
+    moFileReaderSingleton::GetInstance().ReadFile("test.mo");
+    CHECK("No match" == moFileReaderSingleton::GetInstance().Lookup("No match"));
+    CHECK("Can't touch this" == moFileReaderSingleton::GetInstance().Lookup("Can't touch this"));
+}
+
+TEST_CASE("Lookup not existing strings with context", "[LookupWithContext-fail]")
+{
+    moFileReaderSingleton::GetInstance().ReadFile("test.mo");
+    CHECK("String English" == _LC("Nope", "String English"));
+    CHECK("Not this one" == _LC("TEST|String|1", "Not this one"));
 }
