@@ -496,7 +496,7 @@ class moFileReader
                 try {
                     m_lookup_context[original_str.substr(0, x)][original_str.substr(x + 1, original_str.length())] = translation_str;
                 }
-                catch (const std::exception& e) {
+                catch (...) {
                     m_error = "Stream bad during reading. The .mo-file seems to be invalid or has bad descriptions!";
                     return moFileReader::EC_ERROR;
                 }
