@@ -105,6 +105,13 @@
  *
  * <h2>Changelog</h2>
  *
+ * - Version 1.2.0
+ *     - Proper implementation of contexts strings
+ *          Now it uses a separate 2D map for storing strings with context
+ *     - Fixed MagicNumber check not working on Linux
+ *     - Removed duplicate code
+ *     - Added option to disable convenience Class
+ *
  * - Version 1.1.0
  *     - Converted library to a header-only library
  *
