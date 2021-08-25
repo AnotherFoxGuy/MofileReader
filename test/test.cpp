@@ -1,9 +1,9 @@
-#define CATCH_CONFIG_MAIN
-
 #include "catch.hpp"
 #include "moFileReader.hpp"
 
 using namespace moFileLib;
+
+#define MO_TEST_FILE "languages/nl.mo"
 
 #define _L(str) moFR.Lookup(str)
 #define _LC(ctx, str) moFR.LookupWithContext(ctx, str)
@@ -11,7 +11,7 @@ using namespace moFileLib;
 TEST_CASE("Load mo-file", "[ReadFile]")
 {
     moFileReader moFR;
-    CHECK(moFR.ReadFile("test.mo") == moFileReader::EC_SUCCESS);
+    CHECK(moFR.ReadFile(MO_TEST_FILE) == moFileReader::EC_SUCCESS);
 }
 
 TEST_CASE("Load not existing mo-file", "[ReadFile-fail]")
@@ -23,14 +23,14 @@ TEST_CASE("Load not existing mo-file", "[ReadFile-fail]")
 TEST_CASE("Count number of strings", "[Count]")
 {
     moFileReader moFR;
-    moFR.ReadFile("test.mo");
+    moFR.ReadFile(MO_TEST_FILE);
     CHECK(7 ==  moFR.GetNumStrings());
 }
 
 TEST_CASE("Empties the Lookup-Table", "[Count]")
 {
     moFileReader moFR;
-    moFR.ReadFile("test.mo");
+    moFR.ReadFile(MO_TEST_FILE);
     CHECK("Text Nederlands Een" == moFR.Lookup("String English One"));
     CHECK(7 ==  moFR.GetNumStrings());
     moFR.ClearTable();
@@ -41,7 +41,7 @@ TEST_CASE("Empties the Lookup-Table", "[Count]")
 TEST_CASE("Lookup string", "[Lookup]")
 {
     moFileReader moFR;
-    moFR.ReadFile("test.mo");
+    moFR.ReadFile(MO_TEST_FILE);
     /* This is the first comment. */
     CHECK("Text Nederlands Een" == _L("String English One"));
     /* This is the second comment. */
@@ -53,7 +53,7 @@ TEST_CASE("Lookup string", "[Lookup]")
 TEST_CASE("Lookup string with context", "[LookupWithContext]")
 {
     moFileReader moFR;
-    moFR.ReadFile("test.mo");
+    moFR.ReadFile(MO_TEST_FILE);
     /* This is the first comment. */
     CHECK("Text Nederlands Een" == _LC("TEST|String|1", "String English"));
     /* This is the second comment. */
@@ -65,7 +65,7 @@ TEST_CASE("Lookup string with context", "[LookupWithContext]")
 TEST_CASE("Lookup not existing strings", "[Lookup-fail]")
 {
     moFileReader moFR;
-    moFR.ReadFile("test.mo");
+    moFR.ReadFile(MO_TEST_FILE);
     CHECK("No match" == moFR.Lookup("No match"));
     CHECK("Can't touch this" == moFR.Lookup("Can't touch this"));
 }
@@ -73,7 +73,7 @@ TEST_CASE("Lookup not existing strings", "[Lookup-fail]")
 TEST_CASE("Lookup not existing strings with context", "[LookupWithContext-fail]")
 {
     moFileReader moFR;
-    moFR.ReadFile("test.mo");
+    moFR.ReadFile(MO_TEST_FILE);
     CHECK("String English" == _LC("Nope", "String English"));
     CHECK("Not this one" == _LC("TEST|String|1", "Not this one"));
 }

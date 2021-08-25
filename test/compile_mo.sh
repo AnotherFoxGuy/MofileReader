@@ -1,2 +1,2 @@
 #!/bin/sh
-msgfmt -o test.mo test.po
+msgfmt -o languages/nl.mo languages/nl.po
