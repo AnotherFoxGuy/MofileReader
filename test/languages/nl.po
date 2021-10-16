@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moFileReader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-13 14:39+0100\n"
-"PO-Revision-Date: 2021-08-25 09:01+0000\n"
+"POT-Creation-Date: 2021-10-16 11:52+0200\n"
+"PO-Revision-Date: 2021-10-16 11:53+0200\n"
 "Last-Translator: Edgar <Edgar@AnotherFoxGuy.com>\n"
 "Language-Team: Dutch <https://weblate.anotherfoxguy.com/projects/"
 "mofilereader/mofilereader/nl/>\n"
@@ -17,53 +17,61 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8\n"
+"X-Generator: Poedit 3.0\n"
+
+#: test.cpp:60
+msgid ""
+"De naam 'Omrop Fryslân' houdt in: Regionaal herkenbaar, actueel, "
+"onafhankelijk, betrouwbaar, toegankelijk, vermakelijk en divers"
+msgstr ""
+"De namme ‘Omrop Fryslân’ hâldt yn: regionaal werkenber, aktueel, "
+"ûnôfhinklik, betrouber, tagonklik, ûnderhâldend en divers"
+
+#: test.cpp:63
+msgid "I 💚 Fryslân"
+msgstr "Ik 💚 Friesland"
+
+#: test.cpp:58
+msgid ""
+"Omrop Fryslân makket radio en telefyzje yn it Frysk, dêrmei is de omrop de "
+"ienige stjoerder fan Nederlân dy’t net yn it Nederlânsk útstjoert"
+msgstr ""
+"Omrop Fryslân maakt radio en televisie in het Fries, daarmee is de omroep de "
+"enige zender van Nederland die niet in het Nederlanders uitzendt"
 
 #. This is the first comment.
-#: test.cpp:31
+#: test.cpp:71
 msgctxt "TEST|String|1"
 msgid "String English"
 msgstr "Text Nederlands Een"
 
 #. This is the second comment.
-#: test.cpp:33
+#: test.cpp:73
 msgctxt "TEST|String|2"
 msgid "String English"
 msgstr "Text Nederlands Twee"
 
 #. This is the third comment.
-#: test.cpp:35
+#: test.cpp:75
 msgctxt "TEST|String|3"
 msgid "String English"
 msgstr "Text Nederlands Drie"
 
 #. This is the first comment.
-#: test.cpp:19
+#: test.cpp:46
 msgid "String English One"
 msgstr "Text Nederlands Een"
 
 #. This is the third comment.
-#: test.cpp:23
+#: test.cpp:50
 msgid "String English Three"
 msgstr "Text Nederlands Drie"
 
 #. This is the second comment.
-#: test.cpp:21
+#: test.cpp:48
 msgid "String English Two"
 msgstr "Text Nederlands Twee"
 
-#~ msgctxt "TEST|String|1"
-#~ msgid "String English One"
-#~ msgstr "Text Nederlands Een"
-
-#~ msgctxt "TEST|String|3"
-#~ msgid "String English Three"
-#~ msgstr "Text Nederlands Drie"
-
-#~ msgctxt "TEST|String|2"
-#~ msgid "String English Two"
-#~ msgstr "Text Nederlands Twee"
-
-#~ msgctxt "Menu|"
-#~ msgid "File"
-#~ msgstr "Bestand"
+#: test.cpp:62
+msgid "geändert ß"
+msgstr "veranderd ß"
