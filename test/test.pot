@@ -8,44 +8,64 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moFileReader\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-13 14:39+0100\n"
+"POT-Creation-Date: 2021-10-16 11:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: test.cpp:60
+msgid ""
+"De naam 'Omrop Fryslân' houdt in: Regionaal herkenbaar, actueel, "
+"onafhankelijk, betrouwbaar, toegankelijk, vermakelijk en divers"
+msgstr ""
+
+#: test.cpp:63
+msgid "I 💚 Fryslân"
+msgstr ""
+
+#: test.cpp:58
+msgid ""
+"Omrop Fryslân makket radio en telefyzje yn it Frysk, dêrmei is de omrop de "
+"ienige stjoerder fan Nederlân dy’t net yn it Nederlânsk útstjoert"
+msgstr ""
+
 #. This is the first comment.
-#: test.cpp:31
+#: test.cpp:71
 msgctxt "TEST|String|1"
 msgid "String English"
 msgstr ""
 
 #. This is the second comment.
-#: test.cpp:33
+#: test.cpp:73
 msgctxt "TEST|String|2"
 msgid "String English"
 msgstr ""
 
 #. This is the third comment.
-#: test.cpp:35
+#: test.cpp:75
 msgctxt "TEST|String|3"
 msgid "String English"
 msgstr ""
 
 #. This is the first comment.
-#: test.cpp:19
+#: test.cpp:46
 msgid "String English One"
 msgstr ""
 
 #. This is the third comment.
-#: test.cpp:23
+#: test.cpp:50
 msgid "String English Three"
 msgstr ""
 
 #. This is the second comment.
-#: test.cpp:21
+#: test.cpp:48
 msgid "String English Two"
+msgstr ""
+
+#: test.cpp:62
+msgid "geändert ß"
 msgstr ""
