@@ -5,4 +5,5 @@ cmake-build-*/
 docs/
 build/
 _build/
+ci-build/
 *.html

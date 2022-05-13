@@ -22,6 +22,7 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include/)
 option(BUILD_TEST "Set this to ON if you want to build the test" OFF)
 
 if(BUILD_TEST)
+    include(CTest)
     enable_testing()
     add_subdirectory(test)
 endif()
