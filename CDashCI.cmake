@@ -25,7 +25,7 @@ endmacro()
 ctest_start(Continuous)
 
 # finally do the configure, build, test and submit steps
-if (UNIX)
+if (UNIX AND NOT APPLE)
     set(COV_ARG "\"-DENABLE_COVERAGE=ON\"")
     find_program(GCOV_BIN gcov)
     set(CTEST_COVERAGE_COMMAND ${GCOV_BIN})
