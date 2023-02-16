@@ -30,7 +30,7 @@ jobs:
         run: |
           conan config set storage.download_cache="$env:TMP"
           conan install . -b missing -pr:b=tools/conan-profiles/vs-22-release-ninja -pr=tools/conan-profiles/vs-22-release-ninja
-          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake"
+          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release  -DBUILD_TEST=ON -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" -DCMAKE_POLICY_DEFAULT_CMP0091=NEW
           ninja
 
       - name: Test
