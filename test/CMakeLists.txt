@@ -1,14 +1,15 @@
 project(moFileReaderTest)
+
 find_package(Catch2 REQUIRED)
 
 include(CTest)
 include(Catch)
 include(codecov)
 
-add_executable(${PROJECT_NAME} main.cpp test.cpp link_test.cpp)
+add_executable(${PROJECT_NAME} test.cpp link_test.cpp)
 target_include_directories(moFileReaderTest PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(${PROJECT_NAME} PRIVATE Catch2::Catch2)
-catch_discover_tests(${PROJECT_NAME} REPORTER sonarqube OUTPUT_DIR reports)
+target_link_libraries(${PROJECT_NAME} PRIVATE Catch2::Catch2WithMain)
+catch_discover_tests(${PROJECT_NAME})
 add_coverage(${PROJECT_NAME})
 coverage_evaluate()
 
