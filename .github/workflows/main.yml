@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v3.2.6
         with:
           key: conan-win-${{ hashFiles('conanfile.txt') }}
-          path: ~/.conan/
+          path: ~/.conan2/
 
       - name: Install dependencies
         run: choco install conan ninja -y
@@ -28,16 +28,15 @@ jobs:
 
       - name: Build
         run: |
-          conan config set storage.download_cache="$env:TMP"
           conan install . -b missing -pr:b=tools/conan-profiles/vs-22-release-ninja -pr=tools/conan-profiles/vs-22-release-ninja
-          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release  -DBUILD_TEST=ON -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" -DCMAKE_POLICY_DEFAULT_CMP0091=NEW
+          cmake --preset conan-release -DBUILD_TEST=ON
           ninja
 
       - name: Test
         run: ctest -j2 --output-on-failure
 
       - name: Clean Conan pkgs
-        run: conan remove "*" -fsb
+        run: conan cache clean "*" -sbd
 
   build-gcc:
     name: Linux
@@ -51,22 +50,20 @@ jobs:
         uses: actions/cache@v3.2.6
         with:
           key: conan-linux-${{ hashFiles('conanfile.txt') }}
-          path: ~/.conan/
+          path: ~/.conan2/
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-cmake.sh" | sudo bash
-          curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-conan.sh" | sudo bash
+          curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-conan2.0.sh" | sudo bash
           sudo apt-get -y install ninja-build 
 
       - name: Configure
         run: |
-          conan profile new --detect --force default
-          conan profile update conf.tools.cmake.cmaketoolchain:generator="Ninja" default
-          conan profile update settings.compiler.libcxx=libstdc++11 default
-          conan install . -s build_type=Release -b missing -pr:b=default
-          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" -DBUILD_TEST=ON
+          conan profile detect --force
+          conan install . -s build_type=Release -b missing -pr:b=default -c tools.cmake.cmaketoolchain:generator="Ninja"
+          cmake --preset conan-release -DBUILD_TEST=ON
 
       - name: Build
         run: |
@@ -76,7 +73,7 @@ jobs:
         run: ctest -j2 --output-on-failure
 
       - name: Clean Conan pkgs
-        run: conan remove "*" -fsb
+        run: conan cache clean "*" -sbd
 
   build-appleclang:
     name: MacOS
@@ -88,17 +85,16 @@ jobs:
         uses: actions/cache@v3.2.6
         with:
           key: conan-mac-${{ hashFiles('conanfile.txt') }}
-          path: ~/.conan/
+          path: ~/.conan2/
 
       - name: Install dependencies
         run: brew install conan ninja
 
       - name: Build
         run: |
-          conan profile new --detect --force default
-          conan profile update conf.tools.cmake.cmaketoolchain:generator="Ninja" default
-          conan install . -s build_type=Release -b missing -pr:b=default
-          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" -DBUILD_TEST=ON
+          conan profile detect --force          
+          conan install . -s build_type=Release -b missing -pr:b=default -c tools.cmake.cmaketoolchain:generator="Ninja"
+          cmake --preset conan-release -DBUILD_TEST=ON
           ninja
         shell: bash
 
@@ -107,4 +103,4 @@ jobs:
         shell: bash
 
       - name: Clean Conan pkgs
-        run: conan remove "*" -fsb
+        run: conan cache clean "*" -sbd
