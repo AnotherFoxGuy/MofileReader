@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cache conan
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.1
         with:
           key: conan-win-${{ hashFiles('conanfile.txt') }}
           path: ~/.conan2/
@@ -47,7 +47,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cache conan
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.1
         with:
           key: conan-linux-${{ hashFiles('conanfile.txt') }}
           path: ~/.conan2/
@@ -82,7 +82,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cache conan
-        uses: actions/cache@v3.3.0
+        uses: actions/cache@v3.3.1
         with:
           key: conan-mac-${{ hashFiles('conanfile.txt') }}
           path: ~/.conan2/
