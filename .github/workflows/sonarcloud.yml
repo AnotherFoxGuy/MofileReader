@@ -34,7 +34,7 @@ jobs:
           message("::set-output name=timestamp::${current_date}")
 
       - name: cfamily cache files
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4
         with:
           path: cfamily-cache
           key: cfamily-cache-${{ steps.cfamily_cache_timestamp.outputs.timestamp }}
@@ -42,7 +42,7 @@ jobs:
             cfamily-cache-
 
       - name: Cache conan
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4
         with:
           key: conan-linux-${{ hashFiles('conanfile.txt') }}
           path: ~/.conan2/
@@ -50,7 +50,7 @@ jobs:
       - name: Install dependencies
         run: |
           curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-cmake.sh" | sudo bash
-          curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-conan2.0.sh" | sudo bash
+          curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-conan.sh" | sudo bash
 
       - name: Configure
         run: |

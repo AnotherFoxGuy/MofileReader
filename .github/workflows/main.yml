@@ -10,7 +10,11 @@ jobs:
       CONAN_USER_HOME_SHORT: None
     runs-on: windows-latest
     steps:
-      - run: echo $env:BUILD_TOOLS_PATH | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Configure sccache
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.addPath(process.env.BUILD_TOOLS_PATH);
 
       - uses: actions/checkout@v4
 
@@ -24,7 +28,7 @@ jobs:
         run: choco install conan ninja -y
 
       - name: Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1.13.0
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Build
         run: |
@@ -47,7 +51,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Cache conan
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4
         with:
           key: conan-linux-${{ hashFiles('conanfile.txt') }}
           path: ~/.conan2/
@@ -56,7 +60,7 @@ jobs:
         run: |
           sudo apt-get update
           curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-cmake.sh" | sudo bash
-          curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-conan2.0.sh" | sudo bash
+          curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-conan.sh" | sudo bash
           sudo apt-get -y install ninja-build 
 
       - name: Configure
@@ -82,7 +86,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Cache conan
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@v4
         with:
           key: conan-mac-${{ hashFiles('conanfile.txt') }}
           path: ~/.conan2/
